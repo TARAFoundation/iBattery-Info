@@ -24,7 +24,7 @@ fun BatteryInfoScreen(context: Context = LocalContext.current) {
 }
 
 
-@Preview
+@Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun BatteryInfoScreenPreview() {
     IBatteryTheme {
