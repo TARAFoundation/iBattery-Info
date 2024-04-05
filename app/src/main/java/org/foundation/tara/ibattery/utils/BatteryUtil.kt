@@ -10,7 +10,7 @@ object BatteryUtil {
      * @return battery percentage as Integer
      * @author Hemanshu Varma
      */
-    fun getBatteryPercent(batteryStatus: Intent?): Int {
+    fun getBatteryPercent(batteryStatus: Intent?): Float {
 
         // Battery percent
         val batteryPercent = batteryStatus?.let { intent ->
@@ -18,7 +18,7 @@ object BatteryUtil {
             val scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
             level * 100 / scale.toFloat()
         } ?: 0.0f
-        return batteryPercent.toInt()
+        return batteryPercent
     }
 
     /**

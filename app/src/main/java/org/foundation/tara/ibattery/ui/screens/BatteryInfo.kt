@@ -1,26 +1,19 @@
 package org.foundation.tara.ibattery.ui.screens
 
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import org.foundation.tara.ibattery.ui.anims.WavesIndicator
 import org.foundation.tara.ibattery.ui.theme.IBatteryTheme
-import org.foundation.tara.ibattery.utils.BatteryUtil
 
 @Composable
-fun BatteryInfoScreen(context: Context = LocalContext.current) {
-    val batteryStatus = IntentFilter(Intent.ACTION_BATTERY_CHANGED).let { iFilter ->
-        context.registerReceiver(null, iFilter)
-    }
-
-    val batteryPercent = BatteryUtil.getBatteryPercent(batteryStatus)
-    val isCharging = BatteryUtil.getBatteryStatus(batteryStatus)
+fun BatteryInfoScreen(modifier: Modifier, batteryPercent: Float, isCharging: Boolean) {
     Text(
-        text = "isCharging: $isCharging, Percent: $batteryPercent"
+        text = "isCharging: $isCharging, Percent: ${batteryPercent/100f}"
     )
+    WavesIndicator(modifier = modifier, color = Color.Cyan, progress = batteryPercent/100f)
 }
 
 
@@ -28,6 +21,10 @@ fun BatteryInfoScreen(context: Context = LocalContext.current) {
 @Composable
 fun BatteryInfoScreenPreview() {
     IBatteryTheme {
-        BatteryInfoScreen()
+        BatteryInfoScreen(
+            modifier = Modifier,
+            batteryPercent = 56f,
+            isCharging = false
+        )
     }
 }
