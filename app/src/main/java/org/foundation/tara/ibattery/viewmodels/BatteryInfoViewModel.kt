@@ -41,7 +41,7 @@ class BatteryInfoViewModel : ViewModel() {
     fun updateBatteryChargeStatus(batteryStatus: Intent?) {
         val status: Int = batteryStatus?.getIntExtra(BatteryManager.EXTRA_STATUS, -1) ?: -1
         isCharging =
-            (status == BatteryManager.BATTERY_STATUS_CHARGING || status == BatteryManager.BATTERY_STATUS_FULL)
+            (status == BatteryManager.BATTERY_STATUS_CHARGING || status == BatteryManager.BATTERY_PLUGGED_AC)
     }
 
 }

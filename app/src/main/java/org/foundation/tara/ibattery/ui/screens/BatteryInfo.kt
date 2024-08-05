@@ -1,5 +1,8 @@
 package org.foundation.tara.ibattery.ui.screens
 
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -20,11 +23,23 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.foundation.tara.ibattery.ui.anims.WavesIndicator
 import org.foundation.tara.ibattery.ui.theme.IBatteryTheme
+import org.foundation.tara.ibattery.ui.theme.Red80
+import org.foundation.tara.ibattery.ui.theme.Yellow90
 
 @Composable
 fun BatteryInfoScreen(modifier: Modifier, batteryPercent: Float, isCharging: Boolean) {
 
-//    WavesIndicator(modifier = modifier, color = Color.Cyan, progress = batteryPercent/100f)
+    val batteryColor =
+        animateColorAsState(
+            targetValue = if (batteryPercent > 30) Color.Green else if (batteryPercent <= 30 && batteryPercent > 15) Yellow90 else Red80,
+            label = "Battery Percent Color",
+            animationSpec = tween(
+                durationMillis = 300,
+                delayMillis = 700,
+                easing = LinearEasing
+            )
+        )
+
     Column(
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -45,13 +60,13 @@ fun BatteryInfoScreen(modifier: Modifier, batteryPercent: Float, isCharging: Boo
             ) {
                 WavesIndicator(
                     modifier = Modifier.fillMaxSize(),
-                    color = Color.Green,
+                    color = batteryColor.value,
                     progress = batteryPercent / 100f
                 )
                 Text(
                     text = batteryPercent.toInt().toString(),
                     fontWeight = FontWeight.Bold,
-                    style = MaterialTheme.typography.headlineLarge
+                    style = MaterialTheme.typography.displayMedium
                 )
             }
 
